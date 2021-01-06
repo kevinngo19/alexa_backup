@@ -8,7 +8,8 @@ import pyjokes
 listener = sr.Recognizer()
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[1].id)
+engine.setProperty('voice', voices[0].id)
+
 
 def talk(text):
     engine.say(text)
@@ -29,11 +30,14 @@ def take_command():
                 print(a)
                 talk(a)
                 talk('processing')
+                return command
+            else:
+                print("Shut up")
     except:
         print('Sorry Alexa could not recognize your voice')
         talk('I could not recognize your voice')
-        pass
-    return command
+        exit()
+
 
 def run_alexa():
     command1 = take_command()
@@ -48,7 +52,9 @@ def run_alexa():
         print(time)
         talk('current time is' + time)
     elif 'wikipedia' or 'find' or 'who is' or 'what is' in command1:
-        search = command1.replace('who is', '') or command1.replace('find', '') or command1.replace('wikipedia', '') or command1.replace('what is', '')
+        search = command1.replace('who is', '') or command1.replace('find', '') or command1.replace('wikipedia',
+                                                                                                    '') or command1.replace(
+            'what is', '')
         info = wikipedia.summary(search, 1)
         print(info)
         talk(info)
@@ -57,10 +63,6 @@ def run_alexa():
     else:
         talk('Your english is too broken, please say again')
 
+
 while True:
     run_alexa()
-
-
-
-
-
